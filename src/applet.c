@@ -2002,6 +2002,7 @@ out:
 void
 applet_schedule_update_menu (NMApplet *applet)
 {
+    /* Optimization: skip scheduling if menu is already visible */
     if (applet->menu && gtk_widget_get_mapped (applet->menu)) {
         return;
     }

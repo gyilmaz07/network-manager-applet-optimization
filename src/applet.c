@@ -2002,8 +2002,13 @@ out:
 void
 applet_schedule_update_menu (NMApplet *applet)
 {
-	if (!applet->update_menu_id)
-		applet->update_menu_id = g_idle_add (applet_update_menu, applet);
+    /* Optimization: skip scheduling if menu is already visible */
+    if (applet->menu && gtk_widget_get_mapped (applet->menu)) {
+        return;
+    }
+    
+    if (!applet->update_menu_id)
+        applet->update_menu_id = g_idle_add (applet_update_menu, applet);
 }
 
 /*****************************************************************************/
